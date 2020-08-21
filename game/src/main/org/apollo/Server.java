@@ -20,6 +20,7 @@ import org.apollo.cache.IndexedFileSystem;
 import org.apollo.game.model.World;
 import org.apollo.game.plugin.PluginContext;
 import org.apollo.game.plugin.PluginManager;
+import org.apollo.game.release.r317.Release317;
 import org.apollo.game.release.r377.Release377;
 import org.apollo.game.session.ApolloHandler;
 import org.apollo.net.HttpChannelInitializer;
@@ -89,7 +90,7 @@ public final class Server {
 	 * Creates the Apollo server.
 	 */
 	public Server() {
-		logger.info("Starting Apollo...");
+		System.out.println("Starting Apollo...");
 	}
 
 	/**
@@ -101,17 +102,17 @@ public final class Server {
 	 * @throws BindException If the ServerBootstrap fails to bind to the SocketAddress.
 	 */
 	public void bind(SocketAddress service, SocketAddress http, SocketAddress jaggrab) throws IOException {
-		logger.fine("Binding service listener to address: " + service + "...");
+		System.out.println("Binding service listener to address: " + service + "...");
 		bind(serviceBootstrap, service);
 
 		try {
-			logger.fine("Binding HTTP listener to address: " + http + "...");
+			System.out.println("Binding HTTP listener to address: " + http + "...");
 			bind(httpBootstrap, http);
 		} catch (IOException cause) {
 			logger.log(Level.WARNING, "Unable to bind to HTTP - JAGGRAB will be used as a fallback.", cause);
 		}
 
-		logger.fine("Binding JAGGRAB listener to address: " + jaggrab + "...");
+		System.out.println("Binding JAGGRAB listener to address: " + jaggrab + "...");
 		bind(jaggrabBootstrap, jaggrab);
 
 		logger.info("Ready for connections.");
@@ -128,7 +129,7 @@ public final class Server {
 		Release release = (Release) clazz.newInstance();
 		int version = release.getReleaseNumber();
 
-		logger.info("Initialized " + release + ".");
+		System.out.println("Initialized " + release + ".");
 
 		serviceBootstrap.group(loopGroup);
 		httpBootstrap.group(loopGroup);
